@@ -1,0 +1,110 @@
+body {
+	font-family: "Open Sans", Tahoma, Sans-serif;
+	font-size: 1em;
+	padding: 3em;
+	background-color: rgb(247,247,247);
+}
+.left { text-align: left !important; }
+#content {
+  max-width: 1000px;
+  margin: 0 auto;
+  h2 { 
+    font-size: 2.5em;
+    font-weight: lighter; 
+    color: #333;
+    text-align: center;
+    width: 66%;
+    margin: 0 auto 1.5em auto;
+    em {
+      display: block;
+      margin-top: 1em;
+      color: #999;
+      font-size: 0.5em;
+      border-top: 1px #eee solid;
+      border-bottom: 1px #eee solid;
+      padding: 0.33em 0;
+    }
+    @include respond-to('mobile') { width: 100%; }
+  }
+  h3 {
+    margin: 1.5em 0 0 0;
+  }
+  p { font-size: 0.9em; }
+  a.btn {
+    display: inline-block;
+    padding: 0.5em 1em;
+    font-size: 1.66em;
+    min-width: 12em;
+    text-decoration: none;
+    margin: 0 0.5em 0.5em 0;
+    background-color: #666;
+    color: white;
+    &:hover { background-color: #cc3374 !important; }
+    &#dnl-prod-link{ background-color: #3386cc; }
+  }
+  a#dnl-prod-link sup,
+  a.btn:hover sup { color: white; }  
+  sup { 
+    color: #999;
+    font-size: 0.5em;
+  }
+  code {
+    display: block;
+    color: white;
+    margin: 0 0 0.25em 0;
+    padding: 0.5em 1.5rem;
+    line-height: 1.4;
+    pre { overflow: auto; }
+    .comment { color: #999; }
+    .string { color: #fc0; }
+    .var { color: #a2d81f; }
+    .nmbr { color: #f56221; }
+    .el { color: #36a9f2;}
+    .attr { color: #ddd; }
+  }
+  dt,
+  dd { 
+    text-align: left !important; 
+    display: inline-block; 
+    margin: 0 -4px 0 0;
+    vertical-align: top;
+    min-height: 60px;
+    padding: 0.5rem 0;
+    @include respond-to('mobile') {
+      display: block;
+      width: 100% !important;
+      min-height: 0;    
+    }
+  }
+  dt { 
+    background-color: #555;
+    color: white;
+    width: 20%; 
+    font-size: 0.75em;
+    text-transform: uppercase;
+    font-weight: bold;
+    span {
+      font-size: 1em; 
+      display: block;
+      padding: 0.25rem 0.66rem;
+    }
+  }
+  dd { 
+    background-color: #444;
+    width: 80%; 
+    text-align: center;
+  } 
+  @include respond-to('mobile') {
+    text-align: center;
+  }
+}
+footer {
+  text-align: right;
+  border-top: 1px #ddd solid;
+  margin-top: 5em;
+  padding: 1em 0.5em 4em 0.5em;
+  font-size: 0.75em;
+  color: #444;
+  a { color: #37d; }
+  @include respond-to('mobile') { text-align: center; }
+}

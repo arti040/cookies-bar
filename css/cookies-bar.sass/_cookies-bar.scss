@@ -1,0 +1,58 @@
+#cookie-bar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+  text-align: center;
+	background-color: $cookie-bar-bg;
+	color: $text-color;
+	font-family: $font-stack;
+	border-bottom: 1px $cookie-bar-border solid;
+	*padding-bottom: 0.25em;
+  @if $shadow {
+  	box-shadow: 0 2px #{$shadow-radius} rgba(0,0,0,0.08);
+  }
+  & > a { 
+    font-size: 0.8em;
+  	text-decoration: none;
+  	display: inline-block;
+  	padding: 0.25em 1em;
+  	//position: absolute;
+  	margin: 0.28em 0.28em 0 0;
+  	color: $btn-label-color;
+  	float: right;
+  }
+	#accept-link { 	
+    background-color: $accept-btn-color;  
+    &:hover { background-color: saturate($accept-btn-color, 20%); }
+  }
+  #decline-link {
+    background-color: $decline-btn-color;
+    &:hover { background-color: saturate($decline-btn-color, 20%); }
+  }
+  & > #cookie-bar > a:hover { color: $link-color; }
+  p { 
+    margin: 0.5em; 
+  	font-size: 0.85em;
+  	float: left;
+  }
+  p a {
+  	color: #39c;
+  	margin: 0 0.5em;
+  }
+  @include respond-to('mobile') {
+    p { 
+      font-size: 1em;
+      margin: 1em 0.75em 0.5em 0.75em;
+      line-height: 1.4; 
+      float: none;
+    }
+    & > a {
+      float: none;
+      font-size: 1.1em;
+      margin: 0.5em 0.25rem 1.33em 0.25rem;
+      padding: 0.5em 1.5em;
+    }
+  }
+}
