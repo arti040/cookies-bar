@@ -28,31 +28,19 @@
       agreeLinkLabel: "I understand",
       declineLinkLabel: "Decline",
       detailsLinkLabel: "Cookies Policy »", 
-      declineURL: "",
+      declineURL: "", // setting/unsetting URL will disable/enable a feature
       detailsURL: "",
-      detailsLink: false,
-      declineLink: false,
       expireDays: 365,
       cookieEnabled: false,
       showSpeed: 25,
       hideSpeed: 5
     }
     
-    //Validation
-    if((opts.detailsLink === true) && (opts.detailsURL.toString().length == 0)) {
-      opts.mainText = "Error: opts.detailsURL is empty. Check it!";
-      opts.detailsLink = false;
-    }
-    if((opts.declineLink === true) && (opts.declineURL.toString().length == 0)) {
-      opts.mainText = "Error: opts.declineURL is empty. Check it!";
-      opts.detailsLink = false;
-    }
-    
     //Let's create few DOM elements
   	var bar = document.createElement('div');
   		  bar.setAttribute('id','cookie-bar'); 
         
-    if(opts.detailsLink) {
+    if(opts.detailsLink.toString().lenght > 0) {
   	var detailsLink = document.createElement('a');
     		detailsLink.setAttribute('href',opts.detailsURL);
     		detailsLink.innerHTML = opts.detailsLinkLabel;
@@ -62,7 +50,7 @@
     		acceptLink.setAttribute('href','#');
     		acceptLink.innerHTML = opts.agreeLinkLabel;
     
-    if(opts.declineLink) {
+    if(opts.declineURL.toString().lenght > 0) {
       var declineLink = document.createElement('a');
     	    declineLink.setAttribute('id','decline-link');
       		declineLink.setAttribute('href',opts.declineURL);
