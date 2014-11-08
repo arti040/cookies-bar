@@ -71,6 +71,9 @@
   
     var mainText = document.createElement('p');
   	    mainText.innerHTML = opts.mainText;
+    
+    var br = document.createElement('br');
+        br.style.clear = 'both';
   	
   	//Events	
   	//Set proper event name for IEs older than 9
@@ -110,10 +113,8 @@
   	bar.appendChild(mainText);
   	if(opts.declineLink) { bar.appendChild(declineLink) };
   	bar.appendChild(acceptLink);
-  	document.body.appendChild(bar);	
-  	
-  	var barHeight = parseInt(getStyle('cookie-bar','height'));
-    bar.style.top = -barHeight + 'px';
+  	//bar.appendChild(br);
+  	document.body.appendChild(bar);	  	
 	}
   else { 
     //User accepted cookie so nothing to do here
@@ -127,11 +128,14 @@
     	bar.style.top = 0;
     }
   	else {
+    	 var barHeight = bar.offsetHeight;
+      bar.style.top = -barHeight + 'px';
+
     	var barTop = parseInt(getStyle('cookie-bar','top'));
   		showInterval = setInterval(function(){	
   				barTop = ++barTop;				
   				bar.style.top = barTop+'px';
-  				if(parseInt(bar.style.top) == 0) {
+  				if(parseInt(bar.style.top) > 0) {
     				clearInterval(showInterval);
   				}
   		},opts.showSpeed);	
