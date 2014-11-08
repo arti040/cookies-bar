@@ -1,6 +1,6 @@
 /*
  *
- * name: cookie-bar
+ * name: cookies-bar
  * description: Simple and non-annoying Cookie-bar for your webstite 
  * version: 1.1 (08.11.2014)
  * author: Piotr Potera
@@ -28,23 +28,35 @@
       agreeLinkLabel: "I understand",
       declineLinkLabel: "Decline",
       detailsLinkLabel: "Cookies Policy »", 
-      declineURL: "http://google.com",
-      detailsURL: "http://www.yourwebsite.com/cookies-policy",
-      declineLink: true,
+      declineURL: "",
+      detailsURL: "",
+      detailsLink: false,
+      declineLink: false,
       expireDays: 365,
       cookieEnabled: false,
       showSpeed: 25,
       hideSpeed: 5
     }
     
+    //Validation
+    if((opts.detailsLink === true) && (opts.detailsURL.toString().length == 0)) {
+      opts.mainText = "Error: opts.detailsURL is empty. Check it!";
+      opts.detailsLink = false;
+    }
+    if((opts.declineLink === true) && (opts.declineURL.toString().length == 0)) {
+      opts.mainText = "Error: opts.declineURL is empty. Check it!";
+      opts.detailsLink = false;
+    }
+    
     //Let's create few DOM elements
   	var bar = document.createElement('div');
   		  bar.setAttribute('id','cookie-bar'); 
-  
-  	var followLink = document.createElement('a');
-    		followLink.setAttribute('href',opts.detailsURL);
-    		followLink.innerHTML = opts.detailsLinkLabel;
-  	
+        
+    if(opts.detailsLink) {
+  	var detailsLink = document.createElement('a');
+    		detailsLink.setAttribute('href',opts.detailsURL);
+    		detailsLink.innerHTML = opts.detailsLinkLabel;
+  	}
   	var acceptLink = document.createElement('a');
   	    acceptLink.setAttribute('id','accept-link');
     		acceptLink.setAttribute('href','#');
@@ -94,7 +106,7 @@
   	},false);
   	 	
   	//Apply elements to DOM
-  	mainText.appendChild(followLink);
+  	if(opts.detailsLink) { mainText.appendChild(detailsLink) };
   	bar.appendChild(mainText);
   	if(opts.declineLink) { bar.appendChild(declineLink) };
   	bar.appendChild(acceptLink);
