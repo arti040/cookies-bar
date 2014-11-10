@@ -8,4 +8,206 @@
  * github: https://github.com/arti040
  *
  */
-var cookiesBar=function(e){function t(e,t){if(e=="body"){var n=document.body}else{var n=document.getElementById(e)}var r;if(n.currentStyle){r=n.currentStyle[t]}else if(window.getComputedStyle){r=document.defaultView.getComputedStyle(n,null).getPropertyValue(t)}return r}function n(e,t,n){if(n){var r=new Date;r.setTime(r.getTime()+n*24*60*60*1e3);var i="; expires="+r.toGMTString()}else var i="";document.cookie=e+"="+t+i+"; path=/"}function r(e){var t=e+"=";var n=document.cookie.split(";");for(var r=0;r<n.length;r++){var i=n[r];while(i.charAt(0)==" ")i=i.substring(1,i.length);if(i.indexOf(t)==0)return i.substring(t.length,i.length)}}function i(e){n(e,"",-1)}function s(){var e,t,n,r=arguments[0]||{},i=1,s=arguments.length;if(s===i){console.log("Only one argument passed. Returning...");return false}for(;i<s;++i){if((e=arguments[i])!=null){for(t in e){n=e[t];if(r===n){continue}if(n!==undefined){r[t]=n}}}}return r}var o=r(o);if(!o){var u,a,f={};var l=t("body","font-size");var c=Math.floor(window.innerWidth/parseFloat(l)*10)/10;var h={mainText:"We use cookies to track usage and preferences.",agreeLinkLabel:"I understand",declineLinkLabel:"Decline",detailsLinkLabel:"Cookies Policy »",declineURL:"",detailsURL:"",detailsLink:false,declineLink:false,expireDays:365,cookieEnabled:false,showSpeed:25,hideSpeed:5,position:"absolute"};f=s({},h,e);if(e.detailsLink===true&&e.detailsURL.toString().length==0){e.mainText="Error: opts.detailsURL is empty. Check it!";e.detailsLink=false}if(e.declineLink===true&&e.declineURL.toString().length==0){e.mainText="Error: opts.declineURL is empty. Check it!";e.detailsLink=false}var p=document.createElement("div");p.setAttribute("id","cookie-bar");p.style.position=f.position;if(e.detailsLink){var d=document.createElement("a");d.setAttribute("href",e.detailsURL);d.innerHTML=e.detailsLinkLabel}var v=document.createElement("a");v.setAttribute("id","accept-link");v.setAttribute("href","#");v.innerHTML=f.agreeLinkLabel;if(e.declineLink){var m=document.createElement("a");m.setAttribute("id","decline-link");m.setAttribute("href",e.declineURL);m.innerHTML=e.declineLinkLabel}var g=document.createElement("p");g.innerHTML=f.mainText;var y=window.addEventListener?"":"on";var b=window.addEventListener?"addEventListener":"attachEvent";v[b](y+"click",function(r){r.preventDefault();if(c<64){p.style.display="none"}else{var i=parseInt(t("cookie-bar","top"));var s=parseInt(t("cookie-bar","height"));clearInterval(u);a=setInterval(function(){i=--i;p.style.top=i+"px";if(i==s){clearInterval(a);p.style.display="none"}},e.hideSpeed)}if(e.cookieEnabled){n(o,1,e.expireDays)}},false);if(f.detailsLink){g.appendChild(d)}p.appendChild(g);if(f.declineLink){p.appendChild(m)}p.appendChild(v);document.body.appendChild(p)}else{return null}if(c<64){p.style.top=0}else{var w=p.offsetHeight;p.style.top=-w+"px";var E=parseInt(t("cookie-bar","top"));u=setInterval(function(){E=++E;p.style.top=E+"px";if(parseInt(p.style.top)==0){clearInterval(u)}},e.showSpeed)}}
+
+var cookiesBar = function(opts) {
+ 
+  //Usefull methods
+  function getStyle(el,styleProp) {
+    var x;
+    if(el == 'body') { x = document.body; }
+    else { x = document.getElementById(el); }
+  	
+  	var y;
+  	if (x.currentStyle) {
+  		y = x.currentStyle[styleProp];		
+    }
+  	else if (window.getComputedStyle) {
+  		y = document.defaultView.getComputedStyle(x,null).getPropertyValue(styleProp);
+  	}
+  	return y;
+  }
+  function createCookie(name,value,days) {
+      if(days) {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+      }
+      else var expires = "";
+      document.cookie = name+"="+value+expires+"; path=/";
+  }
+  function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+  }
+  function eraseCookie(name) {
+    createCookie(name,"",-1);
+  }
+  function extend() {
+    var objects,name,
+    copy,
+    target = arguments[0] || {},
+    i = 1,
+    length = arguments.length;
+    
+    //do nothing if only one argument is passed;
+    if(length === i) { 
+      console.log("Only one argument passed. Returning..."); 
+      return false;
+    }
+    
+    //main loop
+    for(;i<length;++i) {
+      //Deal with non null/undefined values
+      if(((objects = arguments[i]) != null)){
+        for(name in objects) {
+          copy = objects[name];
+          
+          //Prevent never-ending loop
+          if(target === copy) { continue; }
+          
+          // Don't bring in undefined values
+          if(copy !== undefined) {
+            target[name] = copy;
+          }
+        }        
+      }
+    } 
+    
+    return target;
+  }
+  
+  //First - check if user already accepted cookies policy
+  var cookieAccepted = readCookie(cookieAccepted);
+  
+  if(!cookieAccepted) {  
+    
+    //Some vars
+    var showInterval,hideInterval,settings = {};
+    
+    //Check screen size. We don't want to play animation on small screens.
+    var bodyFontSize = getStyle('body','font-size');
+    var viewportWidth = Math.floor((window.innerWidth/parseFloat(bodyFontSize))*10)/10;
+    
+    //Some defaults first
+    var defaults = {      
+      mainText: "We use cookies to track usage and preferences.", 
+      agreeLinkLabel: "I understand",
+      declineLinkLabel: "Decline",
+      detailsLinkLabel: "Cookies Policy »", 
+      declineURL: "",
+      detailsURL: "",
+      detailsLink: false,
+      declineLink: false,
+      expireDays: 365,
+      cookieEnabled: false,
+      showSpeed: 25,
+      hideSpeed: 5,
+      position: 'absolute'
+    }
+    //Let's update opts with user settings
+    settings = extend({},defaults,opts);
+
+    //Validation
+    if((opts.detailsLink === true) && (opts.detailsURL.toString().length == 0)) {
+      opts.mainText = "Error: opts.detailsURL is empty. Check it!";
+      opts.detailsLink = false;
+    }
+    if((opts.declineLink === true) && (opts.declineURL.toString().length == 0)) {
+      opts.mainText = "Error: opts.declineURL is empty. Check it!";
+      opts.detailsLink = false;
+    }
+    
+    //Let's create few DOM elements
+  	var bar = document.createElement('div');
+  		  bar.setAttribute('id','cookies-bar');
+  		  bar.style.position = settings.position; 
+        
+    if(opts.detailsLink) {
+  	  var detailsLink = document.createElement('a');
+    		detailsLink.setAttribute('href',opts.detailsURL);
+    		detailsLink.innerHTML = opts.detailsLinkLabel;
+  	}
+  	var acceptLink = document.createElement('a');
+  	    acceptLink.setAttribute('id','accept-link');
+    		acceptLink.setAttribute('href','#');
+    		acceptLink.innerHTML = settings.agreeLinkLabel;
+    
+    if(opts.declineLink) {
+      var declineLink = document.createElement('a');
+    	    declineLink.setAttribute('id','decline-link');
+      		declineLink.setAttribute('href',opts.declineURL);
+      		declineLink.innerHTML = opts.declineLinkLabel;
+    } 		
+  
+    var mainText = document.createElement('p');
+  	    mainText.innerHTML = settings.mainText;
+  	
+  	//Events	
+  	//Set proper event name for IEs older than 9
+  	var prefix = window.addEventListener ? "" : "on";
+  	var eventName = window.addEventListener ? "addEventListener" : "attachEvent";
+    
+    //Hide cookies-bar and save a cookie when user clicks on "Accept"/"Agree" link
+  	acceptLink[eventName](prefix + 'click', function(e) {
+  		e.preventDefault();
+  		
+  		//Don't animate bar if screen size is small, i.e tablet/phone
+  		if(viewportWidth < 64) { bar.style.display = 'none'; }
+  		
+  		else {
+    		var barTop = parseInt(getStyle('cookie-bar','top'));
+  			var barHeight = parseInt(getStyle('cookie-bar','height'));
+  			
+  			//Stop animation if user click "Accept" link
+  			clearInterval(showInterval);
+						
+    		hideInterval = setInterval(function() { 
+    			barTop = --barTop;
+    			bar.style.top = barTop+'px';
+    			if(barTop == barHeight) {
+    				clearInterval(hideInterval);
+    				bar.style.display = 'none';
+    			}
+  			}, opts.hideSpeed);
+		  }
+  		
+  		if(opts.cookieEnabled){ createCookie(cookieAccepted,1,opts.expireDays); }
+  		
+  	},false);
+  	 	
+  	//Apply elements to DOM
+  	if(settings.detailsLink) { mainText.appendChild(detailsLink) };
+  	bar.appendChild(mainText);
+  	if(settings.declineLink) { bar.appendChild(declineLink) };
+  	bar.appendChild(acceptLink);
+  	document.body.appendChild(bar);	  	
+	}
+  else { 
+    //User accepted cookie so nothing to do here
+    return null;   
+  }
+  
+  //Don't animate bar if screen size is small, i.e tablet/phone  	
+	if(viewportWidth < 64) { bar.style.top = 0; }
+	else {
+  	bar.style.display = 'block';
+    var barHeight = parseInt(getStyle('cookies-bar','height'));
+    
+    bar.style.top = -barHeight + 'px';
+
+  	var barTop = parseInt(getStyle('cookies-bar','top'));
+		showInterval = setInterval(function(){	
+			barTop = ++barTop;				
+			bar.style.top = barTop+'px';
+			if(parseInt(bar.style.top) == 0) {
+				clearInterval(showInterval);
+			}
+		},opts.showSpeed);	
+  }
+};
+
