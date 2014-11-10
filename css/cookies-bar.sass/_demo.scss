@@ -3,6 +3,7 @@ body {
 	font-size: 1em;
 	padding: 3em;
 	background-color: rgb(247,247,247);
+	@include respond-to('mobile') { padding: 1em; }
 }
 .left { text-align: left !important; }
 #content {
@@ -14,17 +15,22 @@ body {
     color: #333;
     text-align: center;
     width: 66%;
-    margin: 3em auto 1.5em auto;
+    margin: 0 auto 1.5em auto;
     em {
       display: block;
-      margin-top: 1em;
+      margin: 1.33em 0;
       color: #999;
       font-size: 0.5em;
       border-top: 1px #eee solid;
       border-bottom: 1px #eee solid;
       padding: 0.33em 0;
     }
-    @include respond-to('mobile') { width: 100%; }
+    @include respond-to('mobile') { 
+      width: 100%; 
+      font-size: 2.05em;
+      line-height: 1.2;
+      margin-top: 1rem;
+    }
   }
   h3 {
     margin: 1.5em 0 0 0;
@@ -108,12 +114,32 @@ body {
   }
 }
 footer {
-  text-align: right;
+  text-align: center;
   border-top: 1px #ddd solid;
   margin-top: 5em;
   padding: 1em 0.5em 4em 0.5em;
-  font-size: 0.75em;
-  color: #444;
-  a { color: #37d; }
+  font-size: 0.9em;
+  color: #aaa;
+  a {
+    color: #666;
+    font-size: 1.1em;
+    text-decoration: none;
+    border-bottom: 1px #666 dotted;
+  }
+  i { 
+      font-size: 6px !important;
+      margin: 0 0.5rem;
+      color: #666; 
+      vertical-align: middle;
+  }
+  li { display: inline-block; }
+  .socials {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.85em;
+    li { margin: 0 0.5em; }
+    i { margin: 0; }
+  }
   @include respond-to('mobile') { text-align: center; }
 }
