@@ -160,8 +160,8 @@ var cookiesBar = function(opts) {
   		if(viewportWidth < 64) { bar.style.display = 'none'; }
   		
   		else {
-    		var barTop = parseInt(getStyle('cookie-bar','top'));
-  			var barHeight = parseInt(getStyle('cookie-bar','height'));
+    		var barTop = parseInt(getStyle('cookies-bar','top'));
+  			var barHeight = parseInt(getStyle('cookies-bar','height'));
   			
   			//Stop animation if user click "Accept" link
   			clearInterval(showInterval);
