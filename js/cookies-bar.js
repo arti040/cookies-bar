@@ -2,7 +2,7 @@
  *
  * name: cookies-bar
  * description: Simple and non-annoying Cookie-bar for your webstite 
- * version: 1.2 (08.11.2014)
+ * version: 1.2 (11.11.2014)
  * author: Piotr Potera
  * www: http://piotrpotera.com
  * github: https://github.com/arti040
