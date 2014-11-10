@@ -14,7 +14,7 @@ body {
     color: #333;
     text-align: center;
     width: 66%;
-    margin: 0 auto 1.5em auto;
+    margin: 3em auto 1.5em auto;
     em {
       display: block;
       margin-top: 1em;
@@ -41,12 +41,20 @@ body {
     color: white;
     &:hover { background-color: #cc3374 !important; }
     &#dnl-prod-link{ background-color: #3386cc; }
+    @include respond-to('phone') {
+      min-width: 100%;
+      padding: 0.5em 0;
+    }
   }
   a#dnl-prod-link sup,
   a.btn:hover sup { color: white; }  
   sup { 
     color: #999;
     font-size: 0.5em;
+    @include respond-to('phone') {
+     display: block;
+     font-size: 0.66em;
+    }
   }
   code {
     display: block;
@@ -57,10 +65,11 @@ body {
     pre { overflow: auto; }
     .comment { color: #999; }
     .string { color: #fc0; }
-    .var { color: #a2d81f; }
+    .fnc { color: #a2d81f; }
     .nmbr { color: #f56221; }
     .el { color: #36a9f2;}
     .attr { color: #ddd; }
+    .var { color: #cc3374; }
   }
   dt,
   dd { 
