@@ -9,6 +9,10 @@ body {
 #content {
   max-width: 1000px;
   margin: 0 auto;
+  img { 
+    display: block;
+    margin: 0 auto;
+  }
   h2 { 
     font-size: 2.5em;
     font-weight: lighter; 
@@ -127,10 +131,10 @@ footer {
     border-bottom: 1px #666 dotted;
   }
   i { 
-      font-size: 6px !important;
-      margin: 0 0.5rem;
-      color: #666; 
-      vertical-align: middle;
+    font-size: 6px !important;
+    margin: 0 0.5rem;
+    color: #666; 
+    vertical-align: middle;
   }
   li { display: inline-block; }
   .socials {

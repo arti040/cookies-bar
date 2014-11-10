@@ -13,8 +13,9 @@ var cookiesBar = function(opts) {
  
   //Usefull methods
   function getStyle(el,styleProp) {
-    if(el == 'body') { var x = document.body; }
-    else { var x = document.getElementById(el); }
+    var x;
+    if(el == 'body') { x = document.body; }
+    else { x = document.getElementById(el); }
   	
   	var y;
   	if (x.currentStyle) {
@@ -108,7 +109,7 @@ var cookiesBar = function(opts) {
       hideSpeed: 5,
       position: 'absolute'
     }
-    //Let's update settings with user settings
+    //Let's update opts with user settings
     settings = extend({},defaults,opts);
 
     //Validation
@@ -123,7 +124,7 @@ var cookiesBar = function(opts) {
     
     //Let's create few DOM elements
   	var bar = document.createElement('div');
-  		  bar.setAttribute('id','cookie-bar');
+  		  bar.setAttribute('id','cookies-bar');
   		  bar.style.position = settings.position; 
         
     if(opts.detailsLink) {
@@ -191,21 +192,22 @@ var cookiesBar = function(opts) {
     return null;   
   }
   
-  //Run! 
   //Don't animate bar if screen size is small, i.e tablet/phone  	
 	if(viewportWidth < 64) { bar.style.top = 0; }
 	else {
-    var barHeight = bar.offsetHeight;
+  	bar.style.display = 'block';
+    var barHeight = parseInt(getStyle('cookies-bar','height'));
+    
     bar.style.top = -barHeight + 'px';
 
-  	var barTop = parseInt(getStyle('cookie-bar','top'));
+  	var barTop = parseInt(getStyle('cookies-bar','top'));
 		showInterval = setInterval(function(){	
-  				barTop = ++barTop;				
-  				bar.style.top = barTop+'px';
-  				if(parseInt(bar.style.top) == 0) {
-    				clearInterval(showInterval);
-  				}
-  		},opts.showSpeed);	
+			barTop = ++barTop;				
+			bar.style.top = barTop+'px';
+			if(parseInt(bar.style.top) == 0) {
+				clearInterval(showInterval);
+			}
+		},opts.showSpeed);	
   }
 };
 

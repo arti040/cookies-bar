@@ -7,6 +7,23 @@
   <title>Cookies-bar</title>
 </head>
 <body>
-    <script type="text/javascript" src="js/cookies-bar.js"></script>
+  <script type="text/javascript" src="js/cookies-bar.js"></script>
+  <script type="text/javascript">
+    cookiesBar({      
+      mainText: "We use cookies to track usage and preferences.", 
+      agreeLinkLabel: "I understand",
+      declineLinkLabel: "Decline",
+      detailsLinkLabel: "Cookies Policy »", 
+      declineURL: "",
+      detailsURL: "",
+      detailsLink: false,
+      declineLink: false,
+      expireDays: 365,
+      cookieEnabled: false,
+      showSpeed: 25,
+      hideSpeed: 5,
+      position: 'fixed'
+    });
+  </script>
 </body>
 </html> 
