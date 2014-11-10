@@ -1,7 +1,7 @@
 cookies-bar
 ===========
 
-Simple and not annoying cookies accept/decline bar for your website.
+Simple and not annoying cookie accept/decline bar for your website.
 
 Demo:
 -----
