@@ -169,7 +169,7 @@ var cookiesBar = function(opts) {
     //Hide cookies-bar and save a cookie when user clicks on "Accept"/"Agree" link
   	if(!settings.reverseMode) {
   	acceptLink[eventName](prefix + 'click', function(e) {
-  		e.preventDefault();
+  		e.preventDefault ? e.preventDefault() : e.returnValue = false; 
   		
   		//Don't animate bar if screen size is small, i.e tablet/phone
   		if(viewportWidth < 64) { bar.style.display = 'none'; }
@@ -214,8 +214,7 @@ var cookiesBar = function(opts) {
 	else {
   	//Hack for Firefox
   	bar.style.display = 'block';
-  	
-    var barHeight = parseInt(getStyle('cookies-bar','height'));
+    var barHeight = bar.offsetHeight;
     
     bar.style.top = -barHeight + 'px';
 
