@@ -2,7 +2,7 @@
  *
  * name: cookies-bar
  * description: Simple and non-annoying Cookie-bar for your webstite 
- * version: 1.3 (12.11.2014)
+ * version: 1.2 (11.11.2014)
  * author: Piotr Potera
  * www: http://piotrpotera.com
  * github: https://github.com/arti040
@@ -11,7 +11,7 @@
 
 var cookiesBar = function(opts) {
  
-  //Usefull functions
+  //Usefull methods
   function getStyle(el,styleProp) {
     var x;
     if(el == 'body') { x = document.body; }
@@ -80,37 +80,17 @@ var cookiesBar = function(opts) {
     
     return target;
   }
-  function showBar(el,interval,position) {
-    var elHeight = el.offsetHeight;
-    var pos = -elHeight;
-
-    interval = setInterval(function(){
-      pos = ++pos;
-      if(position == 'bottom') {
-        bar.style.bottom = pos+'px';
-      }
-      else {
-        bar.style.top = pos+'px';
-      }
-      if(pos == 0) { clearInterval(interval); }
-
-    }, settings.showSpeed);    
-  } 
-  function hideBar(el,interval,position) {
-    var elHeight = el.offsetHeight;
-    var pos = 0;
-    interval = setInterval(function(){
-      pos = --pos;
-      if(position == 'bottom') {
-        bar.style.bottom = pos+'px';
-      }
-      else {
-        bar.style.top = pos+'px';
-      }
-      if(pos == -elHeight) { clearInterval(interval); }
-
-    }, settings.hideSpeed);
-  } 
+  function fadeOut(el) {
+    el = document.getElementById(el);
+    elOpacity = el.style.opacity;
+    var fadeInterval = setInterval(function() { 
+		el.style.opacity = --elOpacity;
+		if(--elOpacity == 0) {
+			clearInterval(fadeInterval);
+			bar.style.display = 'none';
+		}
+	}, 1000);
+  }
   
   //First - check if user already accepted cookies policy
   var cookieAccepted = readCookie(cookieAccepted);
@@ -138,10 +118,8 @@ var cookiesBar = function(opts) {
       cookieEnabled: false,
       showSpeed: 25,
       hideSpeed: 5,
-      positionMode: 'absolute',
-      position: 'top',
-      reverseMode: false,
-      zIndex: 10
+      position: 'absolute',
+      reverseMode: false
     }
     //Let's update settings.with user settings
     settings = extend({},defaults,opts);
@@ -159,8 +137,7 @@ var cookiesBar = function(opts) {
     //Let's create few DOM elements
   	var bar = document.createElement('div');
   		  bar.setAttribute('id','cookies-bar');
-  		  bar.style.position = settings.positionMode; 
-  		  bar.style.zIndex = settings.zIndex;
+  		  bar.style.position = settings.position; 
         
     if(settings.detailsLink) {
   	  var detailsLink = document.createElement('a');
@@ -195,12 +172,23 @@ var cookiesBar = function(opts) {
   		e.preventDefault ? e.preventDefault() : e.returnValue = false; 
   		
   		//Don't animate bar if screen size is small, i.e tablet/phone
-  		if(viewportWidth < 64) { bar.style.display = 'none'; } 		
+  		if(viewportWidth < 64) { bar.style.display = 'none'; }
+  		
   		else {
+    		var barTop = parseInt(getStyle('cookies-bar','top'));
+  			var barHeight = parseInt(getStyle('cookies-bar','height'));
+  			
   			//Stop animation if user click "Accept" link
   			clearInterval(showInterval);
-  			
-				hideBar(bar,hideInterval,settings.position);		
+						
+    		hideInterval = setInterval(function() { 
+    			barTop = --barTop;
+    			bar.style.top = barTop+'px';
+    			if(barTop == barHeight) {
+    				clearInterval(hideInterval);
+    				bar.style.display = 'none';
+    			}
+  			}, settings.hideSpeed);
 		  }
   		if(settings.cookieEnabled){ createCookie(cookieAccepted,1,settings.expireDays); }
   		
@@ -208,34 +196,41 @@ var cookiesBar = function(opts) {
     }
     
   	//Apply elements to DOM
-  	if(settings.detailsLink) { mainText.appendChild(detailsLink); };
+  	if(settings.detailsLink) { mainText.appendChild(detailsLink) };
   	bar.appendChild(mainText);
-  	if(settings.declineLink || settings.reverseMode) { bar.appendChild(declineLink); }
+  	if(settings.declineLink || settings.reverseMode) { bar.appendChild(declineLink) };
   	if(!settings.reverseMode) { bar.appendChild(acceptLink); }
-  	document.body.appendChild(bar);
-  	
-  	//Set initial top/bottom position
-  	var barHeight = bar.offsetHeight;	  
-  	if(settings.position == 'bottom') { bar.style.bottom = -barHeight+'px'; }
-  	else { bar.style.top = -barHeight+'px'; }	
+  	document.body.appendChild(bar);	  	
 	}
   else { 
     //User accepted cookie so nothing to do here
     return null;   
   }
-    
+  
+  //console.log(settings);
+  
   //Don't animate bar if screen size is small, i.e tablet/phone  	
-	if(viewportWidth < 64) { 
-    if(settings.position == 'bottom') {
-    	bar.style.bottom = 0; 
-    }
-    else { bar.style.top = 0; }
+	if(viewportWidth < 64) { bar.style.top = 0; }
+	else {
+  	//Hack for Firefox
+  	bar.style.display = 'block';
+    var barHeight = bar.offsetHeight;
+    
+    bar.style.top = -barHeight + 'px';
+
+  	var barTop = parseInt(getStyle('cookies-bar','top'));
+		showInterval = setInterval(function(){	
+			barTop = ++barTop;				
+			bar.style.top = barTop+'px';
+			if(parseInt(bar.style.top) == 0) {
+				clearInterval(showInterval);
+			}
+		},settings.showSpeed);	
   }
-	else { showBar(bar,showInterval,settings.position); }
   
   //Handle reverse mode - TODO
   if(settings.reverseMode) {
-    
+    //setTimeout(fadeOut('cookies-bar'),6000);
   }
 };
 

@@ -1,0 +1,42 @@
+// $fonts
+$font-stack: Tahoma, Verdana, Sans-serif;
+
+// $colors
+$cookie-bar-bg: #ffc;
+$cookie-bar-border: #e1d1ab;
+$text-color: #111;
+$link-color: #3386cc;
+$accept-btn-color: #3386cc;
+$decline-btn-color: #cc3374;
+$btn-label-color: white;
+
+// $opts
+$shadow: true !default;
+$shadow-radius: 2px;
+
+// $mixins
+ 
+// $responsivnes
+@mixin respond-to($media) {
+	@if($media == 'huge desktop') {
+    	@media screen and (min-width: 90em) { @content; }
+	} 
+	@if($media == 'desktop') {
+    	@media screen and (min-width: 66em) and (max-width: 90em) { @content; }
+	} 	
+	@if($media == 'computer') {
+  	@media screen and (min-width: 66em) { @content; }
+	}
+	@if($media == 'mobile') {
+    	@media screen and (min-width: 18em) and (max-width: 64em) { @content; }
+	} 
+	@if($media == 'tablet') {
+    	@media screen and (min-width: 36em) and (max-width: 66em) { @content; }
+	} 
+	@if($media == 'phone') {
+    	@media screen and (min-width: 18em) and (max-width: 36em) { @content; }
+	} 
+	@if($media == 'tiny screen') {
+    	@media screen and (max-width: 18em) { @content; }
+	} 
+}

@@ -3,7 +3,6 @@ body {
 	font-size: 1em;
 	padding: 3em;
 	background-color: rgb(247,247,247);
-	@include respond-to('mobile') { padding: 1em; }
 }
 .left { text-align: left !important; }
 #content {
@@ -37,9 +36,37 @@ body {
     }
   }
   h3 {
-    margin: 1.5em 0 0 0;
+    margin: 1.5em 0 1rem 0;
   }
-  p { font-size: 0.9em; }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    ul {
+      margin: 0.5em 0 1.5em 1em;
+    }
+    & > li {
+      margin-bottom: 0.5em;
+    }
+    &#change-log {
+      em {
+        font-size: 0.8em;
+        color: #999;
+      }
+      strong {
+        background-color: #666;
+        color: #fff;
+        border-radius: 3px;
+        padding: 0.1em 0.45em;
+        font-size: 0.8em;
+      }
+    }
+  }
+  p,
+  ul { 
+    font-size: 0.9em; 
+    margin: 0.33 0 1.5rem 0;
+  }
   a.btn {
     display: inline-block;
     padding: 0.5em 1em;
@@ -113,9 +140,7 @@ body {
     width: 80%; 
     text-align: center;
   } 
-  @include respond-to('mobile') {
-    text-align: center;
-  }
+
 }
 footer {
   text-align: center;
@@ -145,5 +170,29 @@ footer {
     li { margin: 0 0.5em; }
     i { margin: 0; }
   }
-  @include respond-to('mobile') { text-align: center; }
+}
+@include respond-to('mobile') {
+  body { 
+    text-align: center;
+    padding: 1em;
+  }
+  #change-log { 
+    text-align: left;
+    p { 
+      display: inline-block;
+      margin: 0.15em 0 0.75em 0;
+    }
+  }
+}
+@include respond-to('phone') {
+  body { padding: 0.5em; }
+  .no-for-phone { display: none; }
+  #change-log p { display: block; }
+  footer .socials {
+    li { 
+      display: block; 
+      margin-bottom: 1em;
+    }
+    li:nth-child(2) { display: none; }
+  }
 }
