@@ -18,34 +18,37 @@
     		<em>...IE7+ and mobile friendly!</em>
   		</h2>
   		
-  		<h3>Download</h3>
-    	<p>
-    		<a id="dnl-prod-link" class="btn" href="https://dl.dropboxusercontent.com/u/69548/work/cookies-bar-v.1.2.zip">Prod. version <sup>(demo inc.)</sup></a>
-    		<a  class="btn" href="https://github.com/arti040/cookies-bar">Developer version <sup>(github)</sup></a>
-      </p>
-      
-      <h3>Integration</h3>
-      <dl>
-        <dt><span>3) Attach CSS file</span></dt>
-        <dd>
-          <code>
-            <span class="el">&lt;link</span> <span class="attr">rel=</span><span class="string">"stylesheet"</span> <span class="attr">type=</span><span class="string">"text/css"</span> <span class="attr">href=</span><span class="string">"css/cookies-bar.css"</span><span class="el">&gt;</span>
-          </code>
-        </dd>
-      </dl> 
-      <dl>
-        <dt><span>2) Add Javascript file to your website</span></dt>
-        <dd>
-          <code>
-            <span class="el">&lt;script</span> <span class="attr">src=</span><span class="string">"js/cookies-bar.js"</span><span class="el">&gt;</span><span class="el">&lt;/script&gt;</span>
-          </code>
-        </dd>
-      </dl>   
-      <dl>
-        <dt><span>1) Run cookiesBar() with desired options</span></dt>
-        <dd class="left">
-          <code>
-            <pre>
+  		<section id="download">
+  		  <h3>Download</h3>
+      	<p>
+      		<a id="dnl-prod-link" class="btn" href="https://dl.dropboxusercontent.com/u/69548/work/cookies-bar-v.1.3.zip">Prod. version <sup>(demo inc.)</sup></a>
+      		<a  class="btn" href="https://github.com/arti040/cookies-bar">Developer version <sup>(github)</sup></a>
+        </p>
+  		</section>
+  		
+      <section id="integration-how-to">
+        <h3>Integration</h3>
+        <dl>
+          <dt><span>3) Attach CSS file</span></dt>
+          <dd>
+            <code>
+              <span class="el">&lt;link</span> <span class="attr">rel=</span><span class="string">"stylesheet"</span> <span class="attr">type=</span><span class="string">"text/css"</span> <span class="attr">href=</span><span class="string">"css/cookies-bar.css"</span><span class="el">&gt;</span>
+            </code>
+          </dd>
+        </dl> 
+        <dl>
+          <dt><span>2) Add Javascript file to your website</span></dt>
+          <dd>
+            <code>
+              <span class="el">&lt;script</span> <span class="attr">src=</span><span class="string">"js/cookies-bar.js"</span><span class="el">&gt;</span><span class="el">&lt;/script&gt;</span>
+            </code>
+          </dd>
+        </dl>   
+        <dl>
+          <dt><span>1) Run cookiesBar() with desired options</span></dt>
+          <dd class="left">
+            <code>
+              <pre>
   <span class="fnc">cookiesBar</span>({     
     mainText: <span class="string">"Main text goes here."</span>, 
     agreeLinkLabel: <span class="string">"I understand"</span>,
@@ -58,17 +61,34 @@
     cookieEnabled: false, <span class="comment">//Set it to true on production server.</span>
     <span class="comment">// Milliseconds between each frame. The lower value, the faster animation is.</span>
     showSpeed: <span class="nmbr">25</span>,
-    hideSpeed: <span class="nmbr">5</span>
-    position: <span class="string">'absolute'</span> <span class="comment">//'absolute' or 'fixed'</span>
-    reverseMode: false, <span class="comment">//If true cookies-bar will close automatically after 3 seconds</span>
+    hideSpeed: <span class="nmbr">5</span>,
+    position: <span class="string">"top"</span> <span class="comment">//Possible values - "top" or "bottom".</span>,
+    positionMode: <span class="string">"absolute"</span>, <span class="comment">//Possible values - "absolute" or "fixed".</span>,
+    zIndex: <span class="nmbr">10</span> <span class="comment">//CSS z-index value for cookies-bar.</span>
   });
-            </pre>
-          </code>
-        </dd>
-      </dl>      
+              </pre>
+            </code>
+          </dd>
+        </dl>
+      </section>
+      
+      <section id="release-notes">
+        <h3>Change log</h3>
+       
+        <ul id="change-log">
+          <li>
+            <strong>12.11.2014, ver. 1.3</strong> 
+            <p>- position and z-index option added. Bugfixes.</p>
+          </li>
+          <li>
+            <strong>10.11.2014, ver. 1.2</strong> 
+            <p>- first public release</p>
+          </li>
+        </ul>
+      </section>      
     </div>
     <footer>
-      <p>Cookies-bar v. 1.2 <i class="fa fa-circle"></i> created by <a href="mailto:ja@piotrpotera.com?subject=Your subject here.">Piotr Potera</a></p>
+      <p>Cookies-bar v. 1.3 <i class="fa fa-circle"></i> <span class="no-for-phone">created by</span> <a href="mailto:ja@piotrpotera.com?subject=Your subject here.">Piotr Potera</a></p>
       <ul class="socials">
         <li><a href="https://www.linkedin.com/in/piotrpotera" title="My LinkedIn profile">LinkedIn profile</a></li>  
         <li><i class="fa fa-circle"></i></li>   
@@ -76,7 +96,7 @@
       </ul>
     </footer>
     
-    <script type="text/javascript" src="js/cookies-bar.js"></script>
+    <script type="text/javascript" src="js/cookies-bar-1.3.min.js"></script>
     <script type="text/javascript">
       cookiesBar({      
         mainText: "We use cookies to track usage and preferences.", 
@@ -91,7 +111,9 @@
         cookieEnabled: false,
         showSpeed: 25,
         hideSpeed: 5,
-        position: 'fixed'
+        position: 'top',
+        positionMode: 'fixed',
+        zIndex: 10
       });
     </script>
 </body>
