@@ -11,7 +11,7 @@
 
 var cookiesBar = function(opts) {
  
-  //Usefull functions
+  //Useful functions
   function getStyle(el,styleProp) {
     var x;
     if(el == 'body') { x = document.body; }
