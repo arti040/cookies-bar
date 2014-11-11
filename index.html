@@ -2,29 +2,98 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="css/cookies-bar.css">
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+  
   <title>Cookies-bar</title>
 </head>
 <body>
-  <script type="text/javascript" src="js/cookies-bar.js"></script>
-  <script type="text/javascript">
-    cookiesBar({      
-      mainText: "We use cookies to track usage and preferences.", 
-      agreeLinkLabel: "I understand",
-      declineLinkLabel: "Decline",
-      detailsLinkLabel: "Cookies Policy »", 
-      declineURL: "",
-      detailsURL: "",
-      detailsLink: false,
-      declineLink: false,
-      expireDays: 365,
-      cookieEnabled: false,
-      showSpeed: 25,
-      hideSpeed: 5,
-      position: 'fixed',
-      reverseMode: false
-    });
-  </script>
+    <div id="content">
+      <img src="i/cookies-bar-logo.png" alt="Cookies Bar - logo">
+  		<h2>
+    		Simple and non-annoying cookies-bar for your website!
+    		<em>...IE7+ and mobile friendly!</em>
+  		</h2>
+  		
+  		<h3>Download</h3>
+    	<p>
+    		<a id="dnl-prod-link" class="btn" href="https://dl.dropboxusercontent.com/u/69548/work/cookies-bar-v.1.2.zip">Prod. version <sup>(demo inc.)</sup></a>
+    		<a  class="btn" href="https://github.com/arti040/cookies-bar">Developer version <sup>(github)</sup></a>
+      </p>
+      
+      <h3>Integration</h3>
+      <dl>
+        <dt><span>3) Attach CSS file</span></dt>
+        <dd>
+          <code>
+            <span class="el">&lt;link</span> <span class="attr">rel=</span><span class="string">"stylesheet"</span> <span class="attr">type=</span><span class="string">"text/css"</span> <span class="attr">href=</span><span class="string">"css/cookies-bar.css"</span><span class="el">&gt;</span>
+          </code>
+        </dd>
+      </dl> 
+      <dl>
+        <dt><span>2) Add Javascript file to your website</span></dt>
+        <dd>
+          <code>
+            <span class="el">&lt;script</span> <span class="attr">src=</span><span class="string">"js/cookies-bar.js"</span><span class="el">&gt;</span><span class="el">&lt;/script&gt;</span>
+          </code>
+        </dd>
+      </dl>   
+      <dl>
+        <dt><span>1) Run cookiesBar() with desired options</span></dt>
+        <dd class="left">
+          <code>
+            <pre>
+  <span class="fnc">cookiesBar</span>({     
+    mainText: <span class="string">"Main text goes here."</span>, 
+    agreeLinkLabel: <span class="string">"I understand"</span>,
+    declineLinkLabel: <span class="string">"Decline"</span>,
+    detailsLinkLabel: <span class="string">"Cookies Policy »"</span>, 
+    declineURL: <span class="string">"http://google.com"</span>,
+    detailsURL: <span class="string">"http://www.yourwebsite.com/cookies-policy"</span>,
+    declineLink: true, <span class="comment">//If set to true, decline link will appear.</span>
+    expireDays: <span class="nmbr">365</span>,
+    cookieEnabled: false, <span class="comment">//Set it to true on production server.</span>
+    <span class="comment">// Milliseconds between each frame. The lower value, the faster animation is.</span>
+    showSpeed: <span class="nmbr">25</span>,
+    hideSpeed: <span class="nmbr">5</span>
+    position: <span class="string">'absolute'</span> <span class="comment">//'absolute' or 'fixed'</span>
+    <!--reverseMode: false, <span class="comment">//If true cookies-bar will close automatically after 3 seconds</span>-->
+  });
+            </pre>
+          </code>
+        </dd>
+      </dl>      
+    </div>
+    <footer>
+      <p>Cookies-bar v. 1.2 <i class="fa fa-circle"></i> created by <a href="mailto:ja@piotrpotera.com?subject=Your subject here.">Piotr Potera</a></p>
+      <ul class="socials">
+        <li><a href="https://www.linkedin.com/in/piotrpotera" title="My LinkedIn profile">LinkedIn profile</a></li>  
+        <li><i class="fa fa-circle"></i></li>   
+        <li><a href="https://github.com/arti040" title="My Github profile">My Github projects</a></li>
+      </ul>
+    </footer>
+    
+    <script type="text/javascript" src="js/cookies-bar.js"></script>
+    <script type="text/javascript">
+      cookiesBar({      
+        mainText: "We use cookies to track usage and preferences.", 
+        agreeLinkLabel: "I understand",
+        declineLinkLabel: "Decline",
+        detailsLinkLabel: "Cookies Policy »", 
+        declineURL: "",
+        detailsURL: "",
+        detailsLink: false,
+        declineLink: false,
+        expireDays: 365,
+        cookieEnabled: false,
+        showSpeed: 25,
+        hideSpeed: 5,
+        position: 'fixed'
+        reverseMode: false
+      });
+    </script>
 </body>
 </html> 
