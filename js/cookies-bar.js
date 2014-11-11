@@ -80,6 +80,17 @@ var cookiesBar = function(opts) {
     
     return target;
   }
+  function fadeOut(el) {
+    el = document.getElementById(el);
+    elOpacity = el.style.opacity;
+    var fadeInterval = setInterval(function() { 
+		el.style.opacity = --elOpacity;
+		if(--elOpacity == 0) {
+			clearInterval(fadeInterval);
+			bar.style.display = 'none';
+		}
+	}, 1000);
+  }
   
   //First - check if user already accepted cookies policy
   var cookieAccepted = readCookie(cookieAccepted);
@@ -107,19 +118,20 @@ var cookiesBar = function(opts) {
       cookieEnabled: false,
       showSpeed: 25,
       hideSpeed: 5,
-      position: 'absolute'
+      position: 'absolute',
+      reverseMode: false
     }
-    //Let's update opts with user settings
+    //Let's update settings.with user settings
     settings = extend({},defaults,opts);
 
     //Validation
-    if((opts.detailsLink === true) && (opts.detailsURL.toString().length == 0)) {
-      opts.mainText = "Error: opts.detailsURL is empty. Check it!";
-      opts.detailsLink = false;
+    if((settings.detailsLink === true) && (settings.detailsURL.toString().length == 0)) {
+      settings.mainText = "Error: settings.detailsURL is empty. Check it!";
+      settings.detailsLink = false;
     }
-    if((opts.declineLink === true) && (opts.declineURL.toString().length == 0)) {
-      opts.mainText = "Error: opts.declineURL is empty. Check it!";
-      opts.detailsLink = false;
+    if((settings.declineLink === true) && (settings.declineURL.toString().length == 0)) {
+      settings.mainText = "Error: settings.declineURL is empty. Check it!";
+      settings.detailsLink = false;
     }
     
     //Let's create few DOM elements
@@ -127,21 +139,23 @@ var cookiesBar = function(opts) {
   		  bar.setAttribute('id','cookies-bar');
   		  bar.style.position = settings.position; 
         
-    if(opts.detailsLink) {
+    if(settings.detailsLink) {
   	  var detailsLink = document.createElement('a');
-    		detailsLink.setAttribute('href',opts.detailsURL);
-    		detailsLink.innerHTML = opts.detailsLinkLabel;
+    		detailsLink.setAttribute('href',settings.detailsURL);
+    		detailsLink.innerHTML = settings.detailsLinkLabel;
   	}
-  	var acceptLink = document.createElement('a');
+  	if(!settings.reverseMode) {
+    	var acceptLink = document.createElement('a');
   	    acceptLink.setAttribute('id','accept-link');
     		acceptLink.setAttribute('href','#');
     		acceptLink.innerHTML = settings.agreeLinkLabel;
+    }
     
-    if(opts.declineLink) {
+    if(settings.declineLink || settings.reverseMode) {
       var declineLink = document.createElement('a');
     	    declineLink.setAttribute('id','decline-link');
-      		declineLink.setAttribute('href',opts.declineURL);
-      		declineLink.innerHTML = opts.declineLinkLabel;
+      		declineLink.setAttribute('href',settings.declineURL);
+      		declineLink.innerHTML = settings.declineLinkLabel;
     } 		
   
     var mainText = document.createElement('p');
@@ -153,6 +167,7 @@ var cookiesBar = function(opts) {
   	var eventName = window.addEventListener ? "addEventListener" : "attachEvent";
     
     //Hide cookies-bar and save a cookie when user clicks on "Accept"/"Agree" link
+  	if(!settings.reverseMode) {
   	acceptLink[eventName](prefix + 'click', function(e) {
   		e.preventDefault();
   		
@@ -173,18 +188,18 @@ var cookiesBar = function(opts) {
     				clearInterval(hideInterval);
     				bar.style.display = 'none';
     			}
-  			}, opts.hideSpeed);
+  			}, settings.hideSpeed);
 		  }
-  		
-  		if(opts.cookieEnabled){ createCookie(cookieAccepted,1,opts.expireDays); }
+  		if(settings.cookieEnabled){ createCookie(cookieAccepted,1,settings.expireDays); }
   		
   	},false);
-  	 	
+    }
+    
   	//Apply elements to DOM
   	if(settings.detailsLink) { mainText.appendChild(detailsLink) };
   	bar.appendChild(mainText);
-  	if(settings.declineLink) { bar.appendChild(declineLink) };
-  	bar.appendChild(acceptLink);
+  	if(settings.declineLink || settings.reverseMode) { bar.appendChild(declineLink) };
+  	if(!settings.reverseMode) { bar.appendChild(acceptLink); }
   	document.body.appendChild(bar);	  	
 	}
   else { 
@@ -192,10 +207,14 @@ var cookiesBar = function(opts) {
     return null;   
   }
   
+  //console.log(settings);
+  
   //Don't animate bar if screen size is small, i.e tablet/phone  	
 	if(viewportWidth < 64) { bar.style.top = 0; }
 	else {
+  	//Hack for Firefox
   	bar.style.display = 'block';
+  	
     var barHeight = parseInt(getStyle('cookies-bar','height'));
     
     bar.style.top = -barHeight + 'px';
@@ -207,7 +226,12 @@ var cookiesBar = function(opts) {
 			if(parseInt(bar.style.top) == 0) {
 				clearInterval(showInterval);
 			}
-		},opts.showSpeed);	
+		},settings.showSpeed);	
+  }
+  
+  //Handle reverse mode - TODO
+  if(settings.reverseMode) {
+    //setTimeout(fadeOut('cookies-bar'),6000);
   }
 };
 
