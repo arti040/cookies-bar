@@ -140,7 +140,12 @@ body {
     width: 80%; 
     text-align: center;
   } 
-
+  #change-log {
+    p { 
+      display: inline-block;
+      margin: 0.15em 0 0.75em 0;
+    }
+  }
 }
 footer {
   text-align: center;
@@ -176,13 +181,7 @@ footer {
     text-align: center;
     padding: 1em;
   }
-  #change-log { 
-    text-align: left;
-    p { 
-      display: inline-block;
-      margin: 0.15em 0 0.75em 0;
-    }
-  }
+  #change-log { text-align: left; }
 }
 @include respond-to('phone') {
   body { padding: 0.5em; }
