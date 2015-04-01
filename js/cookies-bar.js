@@ -1,12 +1,10 @@
 /*
- *
  * name: cookies-bar
  * description: Simple and non-annoying Cookie-bar for your webstite 
- * version: 1.3 (12.11.2014)
+ * version: 1.4 (1.04.2015)
  * author: Piotr Potera
  * www: http://piotrpotera.com
  * github: https://github.com/arti040
- *
  */
 
 var cookiesBar = function(opts) {
