@@ -141,7 +141,8 @@ var cookiesBar = function(opts) {
       positionMode: 'absolute',
       position: 'top',
       reverseMode: false,
-      zIndex: 10
+      delay: 0,
+      zIndex: 10,
     }
     //Let's update settings.with user settings
     settings = extend({},defaults,opts);
@@ -224,6 +225,11 @@ var cookiesBar = function(opts) {
     return null;   
   }
     
+  //AnonFunc for delay option  
+  function run() {
+    return showBar(bar,showInterval,settings.position);
+  }  
+
   //Don't animate bar if screen size is small, i.e tablet/phone  	
 	if(viewportWidth < 64) { 
     if(settings.position == 'bottom') {
@@ -231,7 +237,7 @@ var cookiesBar = function(opts) {
     }
     else { bar.style.top = 0; }
   }
-	else { showBar(bar,showInterval,settings.position); }
+	else { setTimeout(run,settings.delay); }
   
   //Handle reverse mode - TODO
   if(settings.reverseMode) {
