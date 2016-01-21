@@ -103,7 +103,6 @@ var cookiesBar = function(opts) {
   var cookieAccepted = readCookie(cookieAccepted);
 
   if(!cookieAccepted) {
-
     //Some vars
     var showInterval,hideInterval,settings = {};
 
@@ -188,25 +187,25 @@ var cookiesBar = function(opts) {
           //Stop animation if user click "Accept" link
           clearInterval(showInterval);
 
-          hideBar(bar,hideInterval,settings.position);
-      if(settings.cookieEnabled) { createCookie(cookieAccepted,1,settings.expireDays); }
-    },false);
+        hideBar(bar,hideInterval,settings.position);
+        if(settings.cookieEnabled) { createCookie(cookieAccepted,1,settings.expireDays); }
+      },false);
+    }
+
+    //Apply elements to DOM
+    if(settings.detailsLink) { mainText.appendChild(detailsLink); };
+
+    bar.appendChild(mainText);
+
+    if(settings.declineLink || settings.reverseMode) { bar.appendChild(declineLink); }
+    if(!settings.reverseMode) { bar.appendChild(acceptLink); }
+    document.body.appendChild(bar);
+
+    //Set initial top/bottom position
+    var barHeight = bar.offsetHeight;
+    settings.position == 'bottom' ? bar.style.bottom = -barHeight+'px' :
+      bar.style.top = -barHeight+'px';
   }
-
-  //Apply elements to DOM
-  if(settings.detailsLink) { mainText.appendChild(detailsLink); };
-
-  bar.appendChild(mainText);
-
-  if(settings.declineLink || settings.reverseMode) { bar.appendChild(declineLink); }
-  if(!settings.reverseMode) { bar.appendChild(acceptLink); }
-  document.body.appendChild(bar);
-
-  //Set initial top/bottom position
-  var barHeight = bar.offsetHeight;
-  settings.position == 'bottom' ? bar.style.bottom = -barHeight+'px' :
-    bar.style.top = -barHeight+'px';
-	}
   else {
     //User accepted cookie so nothing to do here
     return null;
