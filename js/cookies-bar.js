@@ -145,67 +145,67 @@ var cookiesBar = function(opts) {
     }
 
     //Let's create few DOM elements
-  	var bar = document.createElement('div');
-  		  bar.setAttribute('id','cookies-bar');
-  		  bar.style.position = settings.positionMode;
-  		  bar.style.zIndex = settings.zIndex;
+    var bar = document.createElement('div');
+    bar.setAttribute('id','cookies-bar');
+    bar.style.position = settings.positionMode;
+    bar.style.zIndex = settings.zIndex;
 
     if(settings.detailsLink) {
-  	  var detailsLink = document.createElement('a');
-    		detailsLink.setAttribute('href',settings.detailsURL);
-    		detailsLink.innerHTML = settings.detailsLinkLabel;
-  	}
-  	if(!settings.reverseMode) {
-    	var acceptLink = document.createElement('a');
-  	    acceptLink.setAttribute('id','accept-link');
-    		acceptLink.setAttribute('href','#');
-    		acceptLink.innerHTML = settings.agreeLinkLabel;
+      var detailsLink = document.createElement('a');
+      detailsLink.setAttribute('href',settings.detailsURL);
+      detailsLink.innerHTML = settings.detailsLinkLabel;
+    }
+    if(!settings.reverseMode) {
+      var acceptLink = document.createElement('a');
+      acceptLink.setAttribute('id','accept-link');
+      acceptLink.setAttribute('href','#');
+      acceptLink.innerHTML = settings.agreeLinkLabel;
     }
 
     if(settings.declineLink || settings.reverseMode) {
       var declineLink = document.createElement('a');
-    	    declineLink.setAttribute('id','decline-link');
-      		declineLink.setAttribute('href',settings.declineURL);
-      		declineLink.innerHTML = settings.declineLinkLabel;
+      declineLink.setAttribute('id','decline-link');
+      declineLink.setAttribute('href',settings.declineURL);
+      declineLink.innerHTML = settings.declineLinkLabel;
     }
 
     var mainText = document.createElement('p');
-  	    mainText.innerHTML = settings.mainText;
+    mainText.innerHTML = settings.mainText;
 
-  	//Events
-  	//Set proper event name for IEs older than 9
-  	var prefix = window.addEventListener ? "" : "on";
-  	var eventName = window.addEventListener ? "addEventListener" : "attachEvent";
+    //Events
+    //Set proper event name for IEs older than 9
+    var prefix = window.addEventListener ? "" : "on";
+    var eventName = window.addEventListener ? "addEventListener" : "attachEvent";
 
     //Hide cookies-bar and save a cookie when user clicks on "Accept"/"Agree" link
-  	if(!settings.reverseMode) {
-  	acceptLink[eventName](prefix + 'click', function(e) {
-  		e.preventDefault ? e.preventDefault() : e.returnValue = false;
+    if(!settings.reverseMode) {
+      acceptLink[eventName](prefix + 'click',
+      function(e) {
+        e.preventDefault ? e.preventDefault() : e.returnValue = false;
 
-  		//Don't animate bar if screen size is small, i.e tablet/phone
-  		if(viewportWidth < 64) { bar.style.display = 'none'; }
-  		else {
-  			//Stop animation if user click "Accept" link
-  			clearInterval(showInterval);
+        //Don't animate bar if screen size is small, i.e tablet/phone
+        viewportWidth < 64 ? bar.style.display = 'none' :
+          //Stop animation if user click "Accept" link
+          clearInterval(showInterval);
 
-				hideBar(bar,hideInterval,settings.position);
-		  }
-  		if(settings.cookieEnabled){ createCookie(cookieAccepted,1,settings.expireDays); }
+          hideBar(bar,hideInterval,settings.position);
+      if(settings.cookieEnabled) { createCookie(cookieAccepted,1,settings.expireDays); }
+    },false);
+  }
 
-  	},false);
-    }
+  //Apply elements to DOM
+  if(settings.detailsLink) { mainText.appendChild(detailsLink); };
 
-  	//Apply elements to DOM
-  	if(settings.detailsLink) { mainText.appendChild(detailsLink); };
-  	bar.appendChild(mainText);
-  	if(settings.declineLink || settings.reverseMode) { bar.appendChild(declineLink); }
-  	if(!settings.reverseMode) { bar.appendChild(acceptLink); }
-  	document.body.appendChild(bar);
+  bar.appendChild(mainText);
 
-  	//Set initial top/bottom position
-  	var barHeight = bar.offsetHeight;
-  	if(settings.position == 'bottom') { bar.style.bottom = -barHeight+'px'; }
-  	else { bar.style.top = -barHeight+'px'; }
+  if(settings.declineLink || settings.reverseMode) { bar.appendChild(declineLink); }
+  if(!settings.reverseMode) { bar.appendChild(acceptLink); }
+  document.body.appendChild(bar);
+
+  //Set initial top/bottom position
+  var barHeight = bar.offsetHeight;
+  settings.position == 'bottom' ? bar.style.bottom = -barHeight+'px' :
+    bar.style.top = -barHeight+'px';
 	}
   else {
     //User accepted cookie so nothing to do here
